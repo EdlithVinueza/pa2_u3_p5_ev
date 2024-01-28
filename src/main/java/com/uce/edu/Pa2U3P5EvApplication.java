@@ -1,7 +1,6 @@
 package com.uce.edu;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +8,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.demo.ventas.repository.modelo.DetalleFactura;
-import com.uce.edu.demo.ventas.repository.modelo.Factura;
-import com.uce.edu.demo.ventas.service.IFacturaService;
+import com.uce.edu.demo.ventas.repository.modelo.Habitacion;
+import com.uce.edu.demo.ventas.repository.modelo.Hotel;
+import com.uce.edu.demo.ventas.service.IHabitacionService;
+import com.uce.edu.demo.ventas.service.IHotelService;
 
 @SpringBootApplication
 public class Pa2U3P5EvApplication implements CommandLineRunner {
 
 	@Autowired
-	private IFacturaService iFacturaService;
+	private IHotelService iHotelService;
+	@Autowired
+	private IHabitacionService iHabitacionService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P5EvApplication.class, args);
@@ -26,55 +28,58 @@ public class Pa2U3P5EvApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		Factura fc = new Factura();
-		fc.setCedula("1751678065");
-		fc.setFecha(LocalDateTime.now());
-		fc.setNumero("001-026");
 
-		DetalleFactura df1 = new DetalleFactura();
-		df1.setCantidad(100);
-		df1.setCodigoBarras("456789123");
-		df1.setNombreProdcuto("Spride ");
-		df1.setFactura(fc);
+		Hotel hotel = new Hotel();
+		hotel.setNombre("Hotel 2");
+		hotel.setDireccion("Sur de Quito");
+		hotel.setEstrellas("5");
 
-		DetalleFactura df2 = new DetalleFactura();
-		df2.setCantidad(80);
-		df2.setCodigoBarras("123789456");
-		df2.setNombreProdcuto("Leche entera");
-		df2.setFactura(fc);
+		// Crea algunas habitaciones
+		Habitacion habitacion1 = new Habitacion();
+		habitacion1.setNumero("103");
+		habitacion1.setHotel(hotel);
+		habitacion1.setClase("Clase A");
 
-		List<DetalleFactura> detalleFacturas = new ArrayList<>();
-		detalleFacturas.add(df1);
-		detalleFacturas.add(df2);
+		Habitacion habitacion2 = new Habitacion();
+		habitacion2.setNumero("104");
+		habitacion2.setHotel(hotel);
+		habitacion2.setClase("Clase B");
 
-		fc.setDetalleFacturas(detalleFacturas);
+		Habitacion habitacion3 = new Habitacion();
+		habitacion3.setNumero("105");
+		habitacion3.setHotel(hotel);
+		habitacion3.setClase("Clase C");
 
-		// this.iFacturaService.guardar(fc);
+		// Agrega las habitaciones al hotel
+		hotel.setHabitaciones(Arrays.asList(habitacion1, habitacion2, habitacion3));
 
-		System.out.println("INNER JOIN");
-		List<Factura> Factura1 = this.iFacturaService.buscarFacturaInnerJoin();
-		for (Factura factura : Factura1) {
-			System.out.println(factura.getNumero());
+		// this.iHotelService.guardar(hotel);
+
+		System.out.println("USANDO INNER JOIN");
+		List<Habitacion> habitaciones1 = this.iHotelService.buscarHabitacionesDeHotel("Hotel 1");
+		for (Habitacion h : habitaciones1) {
+			System.out.println(h.getClase());
 		}
 
-		System.out.println("RIGHT JOIN");
-		List<Factura> Factura2 = this.iFacturaService.buscarFacturaRightJoin();
-		for (Factura factura : Factura2) {
-			System.out.println(factura.getNumero());
+		System.out.println("USANDO RIGHT JOIN");
+
+		List<Hotel> hoteles1 = this.iHabitacionService.buscarHotelPorClaseHabitacion("Clase B");
+		for (Hotel h : hoteles1) {
+			System.out.println(h);
 		}
 
-		System.out.println("LEFT JOIN");
-		List<Factura> Factura3 = this.iFacturaService.buscarFacturaLeftJoin();
-		for (Factura factura : Factura3) {
-			System.out.println(factura.getNumero());
+		System.out.println("USANDO LEFT JOIN");
+
+		List<Habitacion> habitaciones2 = this.iHabitacionService.buscarHabitacionesPorSector("Quito Sur");
+		for (Habitacion h : habitaciones2) {
+			System.out.println(h.getClase());
 		}
 
-		System.out.println("FULL JOIN");
-		List<Factura> Factura4 = this.iFacturaService.buscarFacturaFullJoin();
-		for (Factura factura : Factura4) {
-			System.out.println(factura.getNumero());
+		System.out.println("USANDO FULL JOIN");
+		List<Hotel> hoteles2 = this.iHotelService.buscarPorTipoHabitacionYEstrellas("Clase A", "5");
+		for (Hotel h : hoteles2) {
+			System.out.println(h);
 		}
 
 	}
-
 }
