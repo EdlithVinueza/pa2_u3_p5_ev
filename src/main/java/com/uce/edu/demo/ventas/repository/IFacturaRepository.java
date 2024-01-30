@@ -18,5 +18,9 @@ public interface IFacturaRepository {
 	public List<Factura> seleccionarFacturaLeftJoin();
 
 	public List<Factura> seleccionarFacturaFullJoin();
+	
+	public List<Factura> seleccionarFacturaWhereJoin();
+	
+	public List<Factura> seleccionarFacturaFetchJoin();
 
 }
