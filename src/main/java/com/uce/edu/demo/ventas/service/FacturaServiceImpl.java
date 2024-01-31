@@ -1,5 +1,6 @@
 package com.uce.edu.demo.ventas.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.uce.edu.demo.ventas.repository.IFacturaRepository;
 import com.uce.edu.demo.ventas.repository.modelo.Factura;
+import com.uce.edu.demo.ventas.repository.modelo.dto.FacturaDTO;
+
+import jakarta.persistence.Query;
 
 @Service
 public class FacturaServiceImpl implements IFacturaService {
@@ -62,5 +66,47 @@ public class FacturaServiceImpl implements IFacturaService {
 		// TODO Auto-generated method stub
 		return this.iFacturaRepository.seleccionarFacturaFetchJoin();
 	}
+
+	@Override
+	public void actualizar(Factura factura) {
+		// TODO Auto-generated method stub
+		this.iFacturaRepository.actualizar(factura);
+
+	}
+
+	@Override
+	public int actualizarFechas(LocalDateTime fechaNueva, LocalDateTime fechaActual) {
+		// TODO Auto-generated method stub
+		return this.iFacturaRepository.actualizarFechas(fechaNueva, fechaActual);
+
+	}
+	
+	@Override
+	public Factura buscar(Integer id) {
+		// TODO Auto-generated method stub
+		return this.iFacturaRepository.seleccionar(id);
+	}
+
+	@Override
+	public void borrar(Integer id) {
+		// TODO Auto-generated method stub
+		this.iFacturaRepository.eliminar(id);
+
+	}
+
+	@Override
+	public int borrarPorNumero(String numero) {
+		// TODO Auto-generated method stub
+		
+		return this.iFacturaRepository.eliminarPorNumero(numero);
+	}
+
+	@Override
+	public List<FacturaDTO> buscarFacturaDTO() {
+		// TODO Auto-generated method stub
+		return this.iFacturaRepository.seleccionarFacturaDTO();
+	}
+
+
 
 }
