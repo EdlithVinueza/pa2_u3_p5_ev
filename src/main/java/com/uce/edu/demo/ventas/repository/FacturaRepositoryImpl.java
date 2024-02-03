@@ -28,13 +28,14 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 				Factura.class);
 		myQuery.setParameter("numero", numero);
 		Factura factura = myQuery.getSingleResult();
-		factura.getDetalleFacturas().size(); // le digo que cargue el detalle bajo demanda
+		factura.getDetallesFacturas().size(); // le digo que cargue el detalle bajo demanda
 
 		return factura;
 
 	}
 
 	@Override
+	@Transactional
 	public void insertar(Factura factura) {
 		// TODO Auto-generated method stub
 		this.entityManager.persist(factura);
@@ -70,7 +71,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 
 		List<Factura> lista = myQuery.getResultList();
 		for (Factura f : lista) {
-			f.getDetalleFacturas().size();
+			f.getDetallesFacturas().size();
 		}
 
 		return lista;
@@ -84,7 +85,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 
 		List<Factura> lista = myQuery.getResultList();
 		for (Factura f : lista) {
-			f.getDetalleFacturas().size();
+			f.getDetallesFacturas().size();
 		}
 
 		return lista;
@@ -98,7 +99,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 
 		List<Factura> lista = myQuery.getResultList();
 		for (Factura f : lista) {
-			f.getDetalleFacturas().size();
+			f.getDetallesFacturas().size();
 		}
 
 		return lista;
@@ -116,7 +117,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 				.createQuery("SELECT f FROM Factura f, DetalleFactura d WHERE f = d.factura" + "", Factura.class);
 		List<Factura> lista = myQuery.getResultList();
 		for (Factura f : lista) {
-			f.getDetalleFacturas().size();
+			f.getDetallesFacturas().size();
 		}
 
 		return lista;

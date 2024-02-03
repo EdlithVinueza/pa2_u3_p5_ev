@@ -8,7 +8,8 @@ import com.uce.edu.demo.ventas.repository.modelo.dto.FacturaDTO;
 
 public interface IFacturaRepository {
 	public Factura seleccionarPorNumero(String numero);
-
+	
+	
 	public void insertar(Factura factura);
 
 	public List<Factura> seleccionarFacturaInnerJoin();

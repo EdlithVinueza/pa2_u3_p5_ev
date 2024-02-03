@@ -8,25 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import com.uce.edu.deberes.join.repository.modelo.Ciudadano;
-import com.uce.edu.deberes.join.repository.modelo.Cliente;
-import com.uce.edu.deberes.join.repository.modelo.Pedido;
-import com.uce.edu.deberes.join.service.ICiudadanoService;
-import com.uce.edu.deberes.join.service.IClienteService;
-import com.uce.edu.deberes.join.service.IPedidoService;
+import com.uce.edu.demo.ventas.repository.modelo.Cliente;
+import com.uce.edu.demo.ventas.repository.modelo.Factura;
+import com.uce.edu.demo.ventas.service.IFacturaService;
 
 @SpringBootApplication
 public class Pa2U3P5EvApplication implements CommandLineRunner {
 
 	@Autowired
-	private IClienteService iClienteService;
-	
-	@Autowired
-	private IPedidoService iPedidoService;
-	
-	@Autowired
-	private ICiudadanoService iCiudadanoService;
+	private IFacturaService iFacturaService;
 	
 	
 	public static void main(String[] args) {
@@ -37,76 +29,17 @@ public class Pa2U3P5EvApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		System.out.println("INNER JOIN");
-		System.out.println("Ejercicio 1");
-		List<Cliente> c1 = this.iClienteService.buscarClientesConPedidos();
-
-		for (Cliente c : c1) {
-			System.out.println(c);
-		}
-		
-		System.out.println("Ejercicio 2");
-		List<Cliente> c2 = this.iClienteService.buscarClientesConPedidosEnRangoDeFechas(LocalDateTime.of(2024, 01, 31, 12, 0, 0), LocalDateTime.of(2024, 01, 31, 14, 0, 0));
-
-		for (Cliente c : c2) {
-			System.out.println(c);
-		}
-		
-		System.out.println("RIGTH JOIN");
-		System.out.println("Ejercicio 3");
-		List<Pedido> p3 = this.iPedidoService.buscarTodosLosClientesConPedidos();
-		for (Pedido p : p3) {
-			System.out.println(p);
-		}
-		
-		System.out.println("Ejercicio 4");
-		List<Pedido> p4 = this.iPedidoService.busarTodosLosClientesConPedidosEnRangoDeFechas(LocalDateTime.of(2024, 01, 31, 12, 0, 0),LocalDateTime.of(2024, 01, 31, 15, 0, 0));
-		for (Pedido p : p4) {
-			System.out.println(p);
-		}
-		
-		System.out.println("LEFT JOIN");
-		System.out.println("Ejercicio 5");
-		List<Cliente> c5 = this.iClienteService.buscarClientesConYSinPedidos();
-
-		for (Cliente c : c5) {
-			System.out.println(c);
-		}
-		System.out.println("Ejercicio 6");
-		List<Cliente> c6 = this.iClienteService.buscarClientesConYPsinPedidosPorDescripcion("PedidoCliente1_1");
-
-		for (Cliente c : c6) {
-			System.out.println(c);
-		}
+		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+		Factura factura = new Factura();
+		factura.setCedula("1751674021");
+		factura.setFecha(LocalDateTime.now());
+		factura.setNumero("001-003");
 		
 		
-		System.out.println("FULL JOIN");
-		System.out.println("Ejercicio 7");
-		List<Pedido> p7 = this.iPedidoService.buscarPedidosYClientesPorCedula("123456789");
-		for (Pedido p : p7) {
-			System.out.println(p);
-		}
-		
-		System.out.println("Ejercicio 8");
-		List<Ciudadano> c8 = this.iCiudadanoService.buscarPorDireccion("Direccion1");
-		for (Ciudadano p : c8) {
-			System.out.println(p);
-		}
-		
-		System.out.println("FETCH JOIN");
-		System.out.println("Ejercicio 9");
-		List<Ciudadano> c9 = this.iCiudadanoService.buscarPorSalario(new BigDecimal(50000));
-		for (Ciudadano p : c9) {
-			System.out.println(p);
-		}
-		
-		System.out.println("FETCH JOIN");
-		
-		System.out.println("Ejercicio 10");
-		List<Cliente> c10 = this.iClienteService.buscarClientesConPedidosUsandoFetchJoin();
-		for (Cliente c : c10) {
-			System.out.println(c);
-		}
-		
+		Cliente cliente = new Cliente();
+		cliente.setApellido("Vinueza ");
+		cliente.setNombre("Edlith");
+		this.iFacturaService.guardar(factura, cliente);
+	
 	}
 }
