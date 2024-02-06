@@ -14,10 +14,18 @@ public class ClienteSeviceImpl implements IClienteService{
 	private IClienteRepository iClienteRepository;
 
 	@Override
-	@Transactional(value = TxType.REQUIRED)
+	@Transactional(value = TxType.REQUIRES_NEW) //T2
+	//begin
 	public void guardar(Cliente cliente) {
 		// TODO Auto-generated method stub
+		try {
 		this.iClienteRepository.insertar(cliente);
+		}catch(RuntimeException e) {
+			System.out.println(e.getClass());
+		}
 	}
+	//commit --> da un error con el Requires new 
+	//Requiate aprobecha la transaccion
+	//Requiare_new crea una nueva transaccion 
 
 }

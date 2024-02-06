@@ -36,7 +36,9 @@ public class FacturaServiceImpl implements IFacturaService {
 	public void guardar(Factura factura,Cliente cliente) {
 		// TODO Auto-generated method stub
 		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+		System.out.println("PAso el insert de factura");
 		this.iFacturaRepository.insertar(factura);
+		System.out.println("PAso el insert de cliente");
 		this.iClienteService.guardar(cliente);
 
 	}
@@ -115,6 +117,15 @@ public class FacturaServiceImpl implements IFacturaService {
 	public List<FacturaDTO> buscarFacturaDTO() {
 		// TODO Auto-generated method stub
 		return this.iFacturaRepository.seleccionarFacturaDTO();
+	}
+
+	@Override
+	@Transactional(value = TxType.MANDATORY)
+	public void prueba() {
+		// TODO Auto-generated method stub
+		System.out.println("Este metod es de prueba");
+		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+		
 	}
 
 

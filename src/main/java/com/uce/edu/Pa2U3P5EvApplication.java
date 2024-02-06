@@ -37,9 +37,11 @@ public class Pa2U3P5EvApplication implements CommandLineRunner {
 		
 		
 		Cliente cliente = new Cliente();
-		cliente.setApellido("Vinueza ");
+		cliente.setApellido(null);
 		cliente.setNombre("Edlith");
-		this.iFacturaService.guardar(factura, cliente);
+		//this.iFacturaService.guardar(factura, cliente);
+		System.out.println("Main :"+TransactionSynchronizationManager.isActualTransactionActive());
+		this.iFacturaService.prueba();
 	
 	}
 }

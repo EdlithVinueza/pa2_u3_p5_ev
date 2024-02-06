@@ -13,6 +13,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 
 @Repository
 @Transactional
@@ -22,6 +23,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	private EntityManager entityManager;
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Factura seleccionarPorNumero(String numero) {
 		// TODO Auto-generated method stub
 		TypedQuery<Factura> myQuery = this.entityManager.createQuery("SELECT f FROM Factura f WHERE f.numero = :numero",
@@ -35,7 +37,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(value = TxType.MANDATORY)
 	public void insertar(Factura factura) {
 		// TODO Auto-generated method stub
 		this.entityManager.persist(factura);
@@ -43,6 +45,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Factura> seleccionarFacturaInnerJoin() {
 		// TODO Auto-generated method stub
 
@@ -63,6 +66,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Factura> seleccionarFacturaRightJoin() {
 		// Saca todos los elementos de la tabla derecha, incluso los que se cruzan o no
 		// se cruzan
@@ -78,6 +82,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Factura> seleccionarFacturaLeftJoin() {
 		// TODO Auto-generated method stub
 		TypedQuery<Factura> myQuery = this.entityManager
@@ -92,6 +97,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Factura> seleccionarFacturaFullJoin() {
 		// TODO Auto-generated method stub
 		TypedQuery<Factura> myQuery = this.entityManager
@@ -106,6 +112,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Factura> seleccionarFacturaWhereJoin() {
 		// TODO Auto-generated method stub
 		// SQL SELECT *FROM
@@ -124,6 +131,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Factura> seleccionarFacturaFetchJoin() {
 		// TODO Auto-generated method stub
 		// SELECT f FROM Factura f JOIN FETCH f.datalleFacturas d
@@ -135,6 +143,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.MANDATORY)
 	public void actualizar(Factura factura) {
 		// TODO Auto-generated method stub
 		this.entityManager.merge(factura);
@@ -142,6 +151,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.MANDATORY)
 	public int actualizarFechas(LocalDateTime fechaNueva, LocalDateTime fechaActual) {
 		// TODO Auto-generated method stub
 		// SQL: UPDATE factura set fact_fecha = : fechaNueva WHERE fact_fecha
@@ -156,12 +166,14 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Factura seleccionar(Integer id) {
 		// TODO Auto-generated method stub
 		return this.entityManager.find(Factura.class, id);
 	}
 
 	@Override
+	@Transactional(value = TxType.MANDATORY)
 	public void eliminar(Integer id) {
 		// TODO Auto-generated method stub
 		Factura factura = this.seleccionar(id);
@@ -170,6 +182,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.MANDATORY)
 	public int eliminarPorNumero(String numero) {
 		// TODO Auto-generated method stub
 		Query myQuery = this.entityManager.createQuery("DELETE FROM Factura f WHERE f.numero =:numero");
@@ -178,6 +191,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<FacturaDTO> seleccionarFacturaDTO() {
 		// TODO Auto-generated method stub
 		TypedQuery<FacturaDTO> myQuery = this.entityManager.createQuery("SELECT NEW com.uce.edu.demo.ventas.repository.modelo.dto.FacturaDTO(f.numero,f.fecha) FROM Factura f ", FacturaDTO.class);
