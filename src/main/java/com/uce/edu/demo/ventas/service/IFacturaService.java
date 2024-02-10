@@ -38,5 +38,12 @@ public interface IFacturaService {
 	
 	public void prueba ();
 	
+	public List<Factura> buscarTodo();
+	
+	public void pruebaSupport();
+	//Support hace lo que el metodo onicial le diga
+	
+	public void pruebaNever();
+	
 
 }
