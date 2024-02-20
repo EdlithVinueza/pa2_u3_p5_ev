@@ -1,5 +1,7 @@
 package com.uce.edu.demo.ventas.service;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -21,8 +23,12 @@ public class ClienteSeviceImpl implements IClienteService{
 		// TODO Auto-generated method stub
 		try {
 		this.iClienteRepository.insertar(cliente);
+		TimeUnit.SECONDS.sleep(1);
 		}catch(RuntimeException e) {
 			System.out.println(e.getClass());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	//commit --> da un error con el Requires new 
@@ -33,8 +39,8 @@ public class ClienteSeviceImpl implements IClienteService{
 	@Transactional(value = TxType.SUPPORTS) //Propagacion 
 	public void pruebaSupport() {
 		// TODO Auto-generated method stub
-		System.out.println("Este es un metodo Support");
-		System.out.println("Prueba Supports Cliente: "+TransactionSynchronizationManager.isActualTransactionActive());
+		//System.out.println("Este es un metodo Support");
+		//System.out.println("Prueba Supports Cliente: "+TransactionSynchronizationManager.isActualTransactionActive());
 		
 	}
 

@@ -20,13 +20,13 @@ public class ClienteRepositoryImpl implements IClienteRepository {
 	@Transactional(value = TxType.MANDATORY)//Si es Requiared T1
 	//begin
 	public void insertar(Cliente cliente) {
-		System.out.println("Antes de ejecutar en la base");
+		//System.out.println("Antes de ejecutar en la base");
 		try {
 		this.entityManager.persist(cliente);
 		}catch (RuntimeException e) {
 			System.out.println(e.getClass());
 		}
-		System.out.println("Despues de ejecuar en la base");
+		//System.out.println("Despues de ejecuar en la base");
 	}
 	//commit -->Termina T1 si fuera un Required 
 	
