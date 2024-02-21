@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.uce.edu.demo.ventas.repository.modelo.Cliente;
@@ -17,6 +18,7 @@ import com.uce.edu.demo.ventas.service.IClienteService;
 import com.uce.edu.demo.ventas.service.IFacturaService;
 
 @SpringBootApplication
+@EnableAsync
 public class Pa2U3P5EvApplication implements CommandLineRunner {
 
 	@Autowired
@@ -63,7 +65,7 @@ public class Pa2U3P5EvApplication implements CommandLineRunner {
 		long tiempoTotal = (tiempoFinal - tiempoInicial)/1000;
 		System.out.println("Tiempo Total: " +tiempoTotal);
 	*/
-		
+		/*
 		System.out.println("Nombre Hilo: " + Thread.currentThread().getName());
 		long tiempoInicial = System.currentTimeMillis();
 		List<Cliente> listClente = new ArrayList<>();
@@ -78,6 +80,20 @@ public class Pa2U3P5EvApplication implements CommandLineRunner {
 		long tiempoFinal = System.currentTimeMillis();
 		long tiempoTotal = (tiempoFinal - tiempoInicial)/1000;
 		System.out.println("Tiempo Total: " +tiempoTotal);
+		*/
 		
+		System.out.println("Nombre Hilo: " + Thread.currentThread().getName());
+		long tiempoInicial = System.currentTimeMillis();
+		for(int i = 0;i < 500;i++) {
+			Cliente cliente = new Cliente();
+			cliente.setNombre("CN"+i);
+			cliente.setApellido("CA"+i);
+			iClienteService.guardar(cliente);
+		}
+		long tiempoFinal = System.currentTimeMillis();
+		
+		long tiempoTotal = (tiempoFinal - tiempoInicial)/1000;
+		System.out.println("Tiempo Total: " +tiempoTotal);
+		System.out.println("Se ha mandado a procesar a sus 500 clientes, puede continuar con sus actividades");
 	}
 }

@@ -21,6 +21,7 @@ public class ClienteRepositoryImpl implements IClienteRepository {
 	//begin
 	public void insertar(Cliente cliente) {
 		//System.out.println("Antes de ejecutar en la base");
+		
 		try {
 		this.entityManager.persist(cliente);
 		}catch (RuntimeException e) {

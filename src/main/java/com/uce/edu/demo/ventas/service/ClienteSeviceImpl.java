@@ -3,6 +3,7 @@ package com.uce.edu.demo.ventas.service;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -19,8 +20,10 @@ public class ClienteSeviceImpl implements IClienteService{
 	@Override
 	@Transactional(value = TxType.REQUIRES_NEW) //T2
 	//begin
+	@Async
 	public void guardar(Cliente cliente) {
 		// TODO Auto-generated method stub
+		System.out.println("Nombre Hilo del metodo guardar de ClienteService: " + Thread.currentThread().getName());
 		try {
 		this.iClienteRepository.insertar(cliente);
 		TimeUnit.SECONDS.sleep(1);
